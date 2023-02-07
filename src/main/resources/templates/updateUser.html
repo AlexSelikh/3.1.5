@@ -1,21 +1,29 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
 <html lang="en">
 <head>
   <h1>USER UPDATE</h1>
   <meta charset="utf-8" />
+  <title>USER UPDATE</title>
 </head>
 <body>
-<form th:action="@{/{id}(id=${user.getId()})}" th:object="${user}" th:method="PATCH">
+<form th:action="@{/admin/edit/{id}(id=${user.getId()})}" th:object="${user}" th:method="PATCH">
   <input type="hidden" th:field="*{id}" />
-  <label for="name">name</label>
-  <input type="text" th:field="*{name}" id="name" value="name" required>
+  <label for="firstname">firstname</label>
+  <input type="text" id="firstname" th:field="*{firstname}" >
+  <label for="lastname">lastname</label>
+  <input type="text" id="lastname" th:field="*{lastname}" >
+  <label for="username">username</label>
+  <input type="text" id="username" th:field="*{username}" >
+  <label for="password">password</label>
+  <input type="text" id="password" th:field="*{password}" >
 
-  <label for="lastname">lastname</label></p>
-  <input type="text" th:field="*{lastname}" id="lastname" value="lastname" required>
+  <th:block th:each="role: ${listRoles}">
+    <input type="checkbox" th:field="*{roles}"
+           th:text="${role.name}" th:value="${role.id}" class="m-2" />
+  </th:block>
 
-
-    <input type="submit" value="edit">
+    <input type="submit" value="update">
 
 
 </form>

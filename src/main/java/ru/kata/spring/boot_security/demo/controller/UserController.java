@@ -1,52 +1,33 @@
 package ru.kata.spring.boot_security.demo.controller;
 
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import ru.kata.spring.boot_security.demo.Service.UserService;
+import ru.kata.spring.boot_security.demo.model.User;
 
+import java.util.ArrayList;
+import java.util.List;
 
-/*
 @Controller
 public class UserController {
-    private UserService userService;
-    public UserController(UserService userService){
-        this.userService=userService;
+    private final UserService userService;
+
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
-
-
-    @GetMapping("/")
-    public String showAllUsers(Model model) {
-        List<User> users = userService.listUsers();
-        model.addAttribute("users", users);
-        return "allusers";
-    }
-
-    @GetMapping(value = "/new")
-    public String newUser(@ModelAttribute("user") User user) {
-        return "addUser";
-    }
-
-    @PostMapping(value = "/new")
-    public String addUser(@ModelAttribute("user") User user) {
-        userService.add(user);
-        return "redirect:/";
-    }
-
-    @GetMapping("/{id}/edit")
-    public String editUser(Model model, @PathVariable("id") int id) {
-        model.addAttribute("user", userService.getById(id));
-
-        return "/updateUser";
-    }
-
-    @PatchMapping("/{id}")
-    public String updateUser(@ModelAttribute("user") User user) {
-        userService.update(user);
-        return "redirect:/";
-    }
-
-    @DeleteMapping("/{id}")
-    public String deleteUser(@PathVariable("id") int id) {
-        userService.delete(id);
-        return "redirect:/";
+    @GetMapping("/user")
+    public String findUser( ModelMap model) {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        List<String> messages = new ArrayList<>();
+        messages.add("Hello!");
+        messages.add("This is Spring Security Boot first app");
+        model.addAttribute("messages", messages);
+        model.addAttribute("user",user);
+        return "user";
     }
 }
-*/

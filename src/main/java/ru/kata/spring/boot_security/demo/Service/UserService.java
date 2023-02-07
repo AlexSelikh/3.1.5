@@ -18,7 +18,6 @@ import java.util.Optional;
 
 @Service
 public class UserService implements UserDetailsService {
-
     @Autowired
     UserRepository userRepository;
     @Autowired
@@ -37,7 +36,7 @@ public class UserService implements UserDetailsService {
         return user;
     }
 
-    public User findUserById(Long id) {
+    public User findUserById(Integer id) {
         Optional<User> user = userRepository.findById(id);
         return user.orElse(new User());
     }
@@ -52,14 +51,12 @@ public class UserService implements UserDetailsService {
         if (userFromDB != null) {
             return false;
         }
-
-        user.setRoles(Collections.singleton(new Role(1L, "ROLE_USER")));
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userRepository.save(user);
         return true;
     }
 
-    public boolean deleteUser(Long id) {
+    public boolean deleteUser(int id) {
         if (userRepository.findById(id).isPresent()) {
             userRepository.deleteById(id);
             return true;
@@ -67,5 +64,12 @@ public class UserService implements UserDetailsService {
         return false;
     }
 
+    public void addUser(User user) {
+        userRepository.save(user);
+
+    }
+    public List<Role> findRoles(){
+        return roleRepository.findAll();
+    }
 }
 
