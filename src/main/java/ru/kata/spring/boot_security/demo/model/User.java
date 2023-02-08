@@ -1,11 +1,12 @@
 package ru.kata.spring.boot_security.demo.model;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "users")
@@ -22,8 +23,15 @@ public class User implements UserDetails {
     private String firstname;
     @Column
     private String lastname;
-    @ManyToMany(fetch = FetchType.EAGER)
-    private Set<Role> roles;
+    @Fetch(FetchMode.JOIN)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @JoinTable(
+            name = "users_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private Set<Role> roles=new HashSet<>();
+
 
     public User(String username, String password, String firstname, String lastname, Set<Role> roles) {
         this.username = username;
@@ -31,6 +39,7 @@ public class User implements UserDetails {
         this.firstname = firstname;
         this.lastname = lastname;
         this.roles = roles;
+
     }
 
     public User() {
@@ -69,15 +78,18 @@ public class User implements UserDetails {
     }
 
     public Set<Role> getRoles() {
+
         return roles;
     }
 
     public void setRoles(Set<Role> roles) {
+
         this.roles = roles;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
+
         return getRoles();
     }
 
@@ -121,5 +133,17 @@ public class User implements UserDetails {
                 ", lastname='" + lastname + '\'' +
                 ", roles=" + roles +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User user)) return false;
+        return getId() == user.getId();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId());
     }
 }

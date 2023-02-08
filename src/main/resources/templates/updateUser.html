@@ -10,7 +10,7 @@
 <form th:action="@{/admin/edit/{id}(id=${user.getId()})}" th:object="${user}" th:method="PATCH">
   <input type="hidden" th:field="*{id}" />
   <label for="firstname">firstname</label>
-  <input type="text" id="firstname" th:field="*{firstname}" >
+  <input type="text" id="firstname" th:field="*{firstname}"  >
   <label for="lastname">lastname</label>
   <input type="text" id="lastname" th:field="*{lastname}" >
   <label for="username">username</label>
@@ -18,11 +18,12 @@
   <label for="password">password</label>
   <input type="text" id="password" th:field="*{password}" >
 
-  <th:block th:each="role: ${listRoles}">
-    <input type="checkbox" th:field="*{roles}"
-           th:text="${role.name}" th:value="${role.id}" class="m-2" />
-  </th:block>
-
+  <select class="form-control" id="roles" name="roles" >
+    <option th:each="role : ${listRoles}"
+            th:selected="${role.name}"
+            th:value="${role.id}"
+            th:text="${role.name}">Role name</option>
+  </select>
     <input type="submit" value="update">
 
 

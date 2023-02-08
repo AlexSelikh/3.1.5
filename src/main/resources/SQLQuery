@@ -1,0 +1,6 @@
+insert into users (id, firstname, lastname, password, username) VALUES (1,'admin','admin'
+,'$2a$12$6dloNWtdsU5LylhUpt9YtOx63ghS05i6vlwILxx5F3IxcQGwWuyRS','admin');
+insert into roles(id, name) VALUES (1,'ROLE_ADMIN');
+insert into roles(id, name) VALUES (2,'ROLE_USER');
+insert into users_roles(user_id, role_id, roles_id, users_id) VALUES (1,1,1,1);
+insert into users_roles(user_id, role_id, roles_id, users_id) VALUES (1,2,2,1);
