@@ -15,11 +15,11 @@ import java.util.List;
 
 
 @Controller
-public class SecurityController {
+public class UserController {
 
     private final UserServiceInterface userServiceInterface;
 
-    public SecurityController(UserServiceInterface userServiceInterface) {
+    public UserController(UserServiceInterface userServiceInterface) {
         this.userServiceInterface = userServiceInterface;
     }
 
