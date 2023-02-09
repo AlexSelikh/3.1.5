@@ -23,7 +23,7 @@ public class User implements UserDetails {
     private String firstname;
     @Column
     private String lastname;
-    @Fetch(FetchMode.JOIN)
+
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinTable(
             name = "users_roles",

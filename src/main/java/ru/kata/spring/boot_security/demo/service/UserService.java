@@ -9,7 +9,6 @@ import ru.kata.spring.boot_security.demo.repository.RoleRepository;
 import ru.kata.spring.boot_security.demo.repository.UserRepository;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
-import ru.kata.spring.boot_security.demo.repository.UserServiceInterface;
 
 
 import java.util.List;
@@ -84,7 +83,6 @@ public class UserService implements UserDetailsService, UserServiceInterface {
     public List<Role> findRoles() {
         return roleRepository.findAll();
     }
-
 
 }
 
