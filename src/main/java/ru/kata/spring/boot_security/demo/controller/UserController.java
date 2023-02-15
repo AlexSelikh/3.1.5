@@ -34,10 +34,14 @@ public class UserController {
 
     @PostMapping(value = "/admin/new")
     public String addUser(@ModelAttribute("user") User user) {
-        userServiceInterface.saveUser(user);
-        return "redirect:/admin";
-    }
+        if (userServiceInterface.check(user)) {
+            userServiceInterface.saveUser(user);
+            return "redirect:/admin";
 
+        } else {
+            return "/error";
+        }
+    }
     @DeleteMapping("/admin/delete/{id}")
     public String deleteUser(@PathVariable("id") Integer id) {
         userServiceInterface.deleteUser(id);

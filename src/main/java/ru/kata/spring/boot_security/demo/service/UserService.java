@@ -50,11 +50,22 @@ public class UserService implements UserDetailsService, UserServiceInterface {
     }
 
     @Override
-    public  void saveUser(User user) {
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+    public void saveUser(User user) {
 
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userRepository.save(user);
+
     }
+
+    @Override
+    public boolean check(User user) {
+        if (userRepository.findByUsername(user.getUsername()) == null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     @Override
     public User findByUsername(String email) {
         return userRepository.findByUsername(email);

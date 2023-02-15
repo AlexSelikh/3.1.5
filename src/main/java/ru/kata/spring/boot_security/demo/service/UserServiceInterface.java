@@ -14,6 +14,7 @@ public interface UserServiceInterface  {
     public void addUser(User user);
     public List<Role> findRoles();
     public void updateUser(Integer id, User user);
+    public boolean check(User user);
 
     User findByUsername(String email);
 }
