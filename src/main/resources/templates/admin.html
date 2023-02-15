@@ -278,31 +278,31 @@
                                     <div class="form-group">
                                         <label class="font-weight-bold" for="firstname">Firstname: </label>
                                         <input type="text" class="form-control" placeholder="first name"
-                                               th:field="*{firstname}" id="firstname"></div>
+                                               th:field="*{firstname}" id="firstname" ></div>
                                     <div class="form-group">
                                         <label class="font-weight-bold" for="lastname"> Lastname: </label>
                                         <input type="text" class="form-control" placeholder="Last name"
-                                               th:field="*{lastname}" id="lastname"></div>
+                                               th:field="*{lastname}" id="lastname" ></div>
                                     <div class="form-group">
                                         <label class="font-weight-bold" for="age">Age: </label>
                                         <input type="text" class="form-control" placeholder="Age" th:field="*{age}"
-                                               id="age"></div>
+                                               id="age" ></div>
                                     <div class="form-group">
                                         <label class="font-weight-bold" for="email">Email: </label>
                                         <input type="text" class="form-control" placeholder="Username"
-                                               th:field="*{username}" id="email"></div>
+                                               th:field="*{username}" id="email" required></div>
                                     <div class="form-group">
                                         <label class="font-weight-bold" for="passwordNew">Password: </label>
                                         <input type="text" class="form-control" placeholder="Password"
-                                               th:field="*{password}" id="passwordNew"></div>
+                                               th:field="*{password}" id="passwordNew" required></div>
                                     <div class="form-group">
                                         <label class="font-weight-bold" for="roles">Role</label>
-                                        <select class="form-control" id="roles" name="roles" multiple="multiple">
+                                        <select class="form-control" id="roles" name="roles" multiple="multiple" required>
                                             <option th:each="role : ${listRoles}"
                                                     th:selected="${role.name}"
                                                     th:value="${role.id}"
                                                     th:text="${role.name}">Role name
-                                            </option>
+                                                </option>
                                         </select>
                                         <button type="submit" class="btn btn-outline-dark">Add User</button>
                                     </div>
