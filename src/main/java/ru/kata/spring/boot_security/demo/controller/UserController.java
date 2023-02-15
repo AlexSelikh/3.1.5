@@ -4,6 +4,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.service.UserServiceInterface;
 
@@ -24,17 +25,11 @@ public class UserController {
     }
 
     @GetMapping("/admin")
-    public String showAllUsers(Model model) {
-        List<User> users = userServiceInterface.allUsers();
-        model.addAttribute("users", users);
+    public String showAllUsers(@ModelAttribute("user") User user, Model model) {
+        model.addAttribute("users", userServiceInterface.allUsers());
+        model.addAttribute("listRoles", userServiceInterface.findRoles());
+        model.addAttribute("userInfo", (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
         return "admin";
-    }
-
-    @GetMapping(value = "/admin/new")
-    public String newUser(@ModelAttribute("user") User user, Model model) {
-        List<Role> listRoles = userServiceInterface.findRoles();
-        model.addAttribute("listRoles", listRoles);
-        return "addUser";
     }
 
     @PostMapping(value = "/admin/new")
@@ -43,24 +38,15 @@ public class UserController {
         return "redirect:/admin";
     }
 
-    @DeleteMapping("/admin/{id}")
+    @DeleteMapping("/admin/delete/{id}")
     public String deleteUser(@PathVariable("id") Integer id) {
         userServiceInterface.deleteUser(id);
         return "redirect:/admin";
     }
 
-    @GetMapping("/admin/edit/{id}")
-    public String editUser(Model model, @PathVariable("id") int id) {
-        User user = userServiceInterface.findUserById(id);
-        List<Role> listRoles = userServiceInterface.findRoles();
-        model.addAttribute("user", user);
-        model.addAttribute("listRoles", listRoles);
-        return "/updateUser";
-    }
-
     @PatchMapping("/admin/edit/{id}")
-    public String updateUser(@ModelAttribute("user") User user) {
-        userServiceInterface.saveUser(user);
+    public String updateUser(@ModelAttribute("user") User user, BindingResult result, @PathVariable("id") Integer id) {
+        userServiceInterface.updateUser(id, user);
         return "redirect:/admin";
     }
 
@@ -71,4 +57,7 @@ public class UserController {
         return "user";
     }
 }
+
+
+
 

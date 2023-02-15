@@ -9,12 +9,14 @@ import javax.persistence.*;
 import java.util.*;
 
 @Entity
+
 @Table(name = "users")
+
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column
+    @Column(name="Email", unique = true)
     private String username;
     @Column
     private String password;
@@ -23,6 +25,8 @@ public class User implements UserDetails {
     private String firstname;
     @Column
     private String lastname;
+    @Column
+    private int age;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinTable(
@@ -33,11 +37,12 @@ public class User implements UserDetails {
     private Set<Role> roles=new HashSet<>();
 
 
-    public User(String username, String password, String firstname, String lastname, Set<Role> roles) {
+    public User(String username, String password, String firstname, String lastname, int age, Set<Role> roles) {
         this.username = username;
         this.password = password;
         this.firstname = firstname;
         this.lastname = lastname;
+        this.age=age;
         this.roles = roles;
 
     }
@@ -93,6 +98,14 @@ public class User implements UserDetails {
         return getRoles();
     }
 
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
     @Override
     public String getPassword() {
         return password;
@@ -127,10 +140,11 @@ public class User implements UserDetails {
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", username='" + username + '\'' +
+                ", email='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", firstname='" + firstname + '\'' +
                 ", lastname='" + lastname + '\'' +
+                ", age='" + age + '\'' +
                 ", roles=" + roles +
                 '}';
     }

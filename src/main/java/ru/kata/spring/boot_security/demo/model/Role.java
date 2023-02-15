@@ -9,15 +9,18 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
+
 @Entity
 @Table(name = "roles")
 public class Role implements GrantedAuthority {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @Column(unique = true)
     private String name;
+
     @ManyToMany(mappedBy = "roles")
-    private Set<User> users=new HashSet<>();
+    private Set<User> users = new HashSet<>();
 
     public Role() {
     }
@@ -60,10 +63,8 @@ public class Role implements GrantedAuthority {
         return getName();
     }
 
-
     @Override
     public String toString() {
         return name;
     }
-
 }

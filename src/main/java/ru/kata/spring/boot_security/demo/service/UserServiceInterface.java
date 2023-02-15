@@ -9,8 +9,12 @@ import java.util.List;
 public interface UserServiceInterface  {
     public User findUserById(Integer id);
     public List<User> allUsers();
-    public boolean saveUser(User user);
+    public void saveUser(User user);
     public boolean deleteUser(int id);
     public void addUser(User user);
     public List<Role> findRoles();
+    public void updateUser(Integer id, User user);
+
+    User findByUsername(String email);
 }
+

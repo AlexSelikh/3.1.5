@@ -23,11 +23,9 @@ public class UserService implements UserDetailsService, UserServiceInterface {
 
     public UserService(UserRepository userRepository, RoleRepository roleRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userRepository = userRepository;
-
         this.roleRepository = roleRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
-
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -52,18 +50,15 @@ public class UserService implements UserDetailsService, UserServiceInterface {
     }
 
     @Override
-    public boolean saveUser(User user) {
-        User userFromDB = userRepository.findByUsername(user.getUsername());
-
-        if (userFromDB != null) {
-            return false;
-        }
+    public  void saveUser(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 
         userRepository.save(user);
-        return true;
     }
-
+    @Override
+    public User findByUsername(String email) {
+        return userRepository.findByUsername(email);
+    }
 
     public boolean deleteUser(int id) {
         if (userRepository.findById(id).isPresent()) {
@@ -82,6 +77,12 @@ public class UserService implements UserDetailsService, UserServiceInterface {
     @Override
     public List<Role> findRoles() {
         return roleRepository.findAll();
+    }
+
+    public void updateUser(Integer id, User user) {
+        user.setId(id);
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        userRepository.save(user);
     }
 
 }
