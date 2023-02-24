@@ -28,13 +28,15 @@
 </div>
 <div class="container-fluid">
     <div class="row">
-        <div class="col-lg-1" style="background-color:yellow;">
-            <nav class="nav flex-column">
-                <security:authorize access="hasRole('ROLE_ADMIN')">
-                <a class="nav-link" href="/admin">Admin</a>
-                </security:authorize>
-                <a class="nav-link" href="/user">User</a>
-            </nav>
+        <!-- Панель навигации -->
+        <div class="col-2" style="padding: 15px 0 0">
+            <ul class="nav flex-column nav-pills">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#userPanel"
+                       role="tab"
+                       aria-controls="v-pills-profile" aria-selected="false">User</a>
+                </li>
+            </ul>
         </div>
         <div class="col-10 bg-gray">
             <div class="tab-content" id="v-pills-tabContent" style="padding: 15px 20px 0; height: 100vh">
@@ -64,16 +66,8 @@
 
                                     </tr>
                                     </thead>
-                                    <tbody>
-                                    <tr th:each="user : ${user}">
-                                        <th scope="row" th:text="${user.id}">1</th>
-                                        <td th:text="${user.firstname}"></td>
-                                        <td th:text="${user.lastname}"></td>
-                                        <td th:text="${user.age}"></td>
-                                        <td th:text="${user.username}"></td>
-                                        <td th:text="${user.roles}"></td>
-                                    </tr>
-                                    </tbody>
+
+                                    <tbody id="tbody-user"></tbody>
                                 </table>
                             </div>
                         </div>
@@ -95,6 +89,7 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
-<script src="/js/myJs.js"></script>
+
+<script type="text/javascript" src="/js/user.js"></script>
 </body>
 </html>

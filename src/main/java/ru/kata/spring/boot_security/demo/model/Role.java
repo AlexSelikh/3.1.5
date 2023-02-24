@@ -1,5 +1,6 @@
 package ru.kata.spring.boot_security.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.springframework.security.core.GrantedAuthority;
@@ -18,7 +19,8 @@ public class Role implements GrantedAuthority {
     private long id;
     @Column(unique = true)
     private String name;
-
+    /*@JsonIgnore*/
+    @Transient
     @ManyToMany(mappedBy = "roles")
     private Set<User> users = new HashSet<>();
 
